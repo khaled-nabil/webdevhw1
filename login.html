@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Login - STARS</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+	if(typeof(Storage) == "undefined") {
+		alert("Sorry, but your browser doesn't meet the webpage requirements");
+	}
+	$(document).ready(function(e) {
+		
+		var login = function(username,password){
+			userfound = false;
+			$.getJSON( "ajax/users.json", function( data ) {
+			}).done(function(data) {
+				$.each(data.advisors, function (i, arr){
+					if(arr.username == username && arr.password == password){
+						userfound = true;
+					}
+				});
+				if(userfound){
+					$("#sucess").removeClass('hidden').hide().fadeIn();
+					$("#login :input, #login :button").prop( "disabled", true );
+					setTimeout("location.href = 'records.html';", 1000);
+				}
+				else
+					$("#false").removeClass('hidden').hide().fadeIn();
+			});
+		}
+		//$.each( jsonfile.advisors, function( key, val ) {
+			//val.username;
+		//});
+
+			$( "#login" ).submit(function( event ) {
+			  login($("#username").val(),$("#password").val());
+			  //alert($("#password").val());
+			  event.preventDefault();
+			  return false;
+			});
+		});
+
+</script>
+<style>
+body {
+	font-family: 'Roboto', sans-serif;
+}
+.bs-callout {
+	border-left-width: 10px;
+	border-left-style: solid;
+	padding-left: 10px;
+	margin-bottom: 40px;
+	color: #666;
+}
+.bs-callout-info {
+	border-left-color: #1b809e
+}
+.bs-callout-info h4 {
+	color: #1b809e
+}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="#">STARS</a> </div>
+    <div class="collapse navbar-collapse" id="menu">
+      <p class="navbar-text"> Please login to carry on activites </p>
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" disabled="disabled">
+        </div>
+        <button type="submit" class="btn btn-default" disabled="disabled">Submit</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<section class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
+      <div class="alert alert-danger hidden" role="alert" id="false">Username/password were not matched</div>
+      <div class="alert alert-warning hidden" role="alert" id="wait">Please wait while data loads</div>
+      <div class="alert alert-success hidden" role="alert" id="sucess">Logged in, you're being redirected</div>
+      <div class="bs-callout bs-callout-info">
+        <h3>For Demo purposes</h3>
+        User " scarter " and " 123456 " as username and password to login. </div>
+      <form id="login">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" placeholder="Password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+      </form>
+    </div>
+  </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Login - STARS</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+<script>
+	$(document).ready(function(e) {
+		var data = $('#students').DataTable( {
+			"ajax": 'ajax/students.json'
+		} );
+		$('#students tbody').on( 'click', 'tr', function () {
+			$(this).toggleClass('selected');
+			if(data.rows('.selected').data().length > 0) {
+				$("#followup ").removeClass("disabled");
+			}
+			else {
+				$("#followup").addClass("disabled");
+			}
+			if(data.rows('.selected').data().length == 1) {
+				$("#actions").removeClass("disabled");
+				$("#actions>.dropdown-toggle").removeClass("disabled");
+			}
+			else {
+				$("#actions").addClass("disabled");
+				$("#actions>.dropdown-toggle").addClass("disabled");
+			}
+		});
+		$("#date").attr("min",moment().format('YYYY-MM-DD'));
+		$("#date").val(moment().format('YYYY-MM-DD'));
+		$("#actionid").val(Math.floor((Math.random() * 10) + 1));
+		$("#moreattach").on("click",function(){
+			$(".file").append('<input type="file" class="form-control" placeholder="Attach" />');
+			
+		});
+		$("#reset").on("click",function(){
+			$("#action").find("input[type=text], textarea, select").val("");
+			$(".file").empty();
+		});
+
+	});
+
+</script>
+<style>
+body {
+	font-family: 'Roboto', sans-serif;
+}
+.selected {
+	background-color: #F1C7C7 !important;
+}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="#">STARS</a> </div>
+    <div class="collapse navbar-collapse" id="menu">
+      <p class="navbar-text">Welcome back, Samuel.</p>
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-left">
+        <li id="followup" class="disabled"><a href="#" data-toggle="modal" data-target="#addaction">Add Flow-up action</a></li>
+        <li class="dropdown disabled" id="actions">
+          <a href="#" class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Student Action <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="myactions.html">My actions</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#otheractions">Actions by type</a></li>
+          </ul>
+        </li>
+      </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="login.html">Logout</a></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+<section class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <table id="students" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Gender</th>
+            <th>Program</th>
+            <th>GPA</th>
+            <th>Risk Category</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="addaction" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Follow-up Action</h4>
+      </div>
+      <div class="modal-body">
+      <form id="action">
+        <div class="form-group col-md-6">
+          <label for="date">Follow-up Date</label>
+          <input type="date" class="form-control" id="date" placeholder="Date" max="2016-12-31" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="date">Action ID</label>
+          <input type="number" id="actionid" class="form-control" placeholder="Action ID" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="semester">Semester</label>
+			<select id="semester" class="form-control">
+            	<option>Fall 2015
+                </option>
+            	<option>Spring 2015
+                </option>
+            	<option>Summer 2015
+                </option>
+            	<option>Fall 2016
+                </option>
+            	<option>Spring 2016
+                </option>
+            	<option>Summer 2016
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="actiontype">ActionType</label>
+			<select id="actiontype" class="form-control">
+            	<option>Meeting
+                </option>
+            	<option>Referral
+                </option>
+            	<option>Email
+                </option>
+            	<option>Letter
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="title">Title</label>
+          <input type="text" id="title" class="form-control" placeholder="Title" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="desc">Description</label>
+          <textarea id="desc" class="form-control" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="courseid">Course ID</label>
+			<select id="courseid" class="form-control">
+            	<option>Please choose</option>
+            	<option>AUP
+                </option>
+            	<option>CHE
+                </option>
+            	<option>CVE
+                </option>
+            	<option>CS
+                </option>
+            	<option>CE
+                </option>
+            	<option>EE
+                </option>
+            	<option>ME
+                </option>
+            	<option>ISE
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="instructorid">Instructor ID</label>
+          <input type="text" value="41b02f22-ac19-47b3-94e0-7a0b70a59779" readonly="readonly" id="instructorid" class="form-control" placeholder="Title" />
+        </div>
+        <div class="form-group col-md-12">
+          <label>Attachement</label>
+          <input type="file" class="form-control" placeholder="Attach" />
+          <div class="file">
+          </div>
+        </div>
+        <button id="moreattach">Add More Attachments</button>
+        <div class="clearfix"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reset">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="otheractions" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Actions by type</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group col-md-12">
+            Select an Advisor Type to view the  actions with selected student.
+        </div>
+        <div class="form-group col-md-12">
+          <label for="semester">Semester</label>
+			<select id="semester" class="form-control" multiple="multiple">
+            	<option>Please choose an Action type
+                </option>
+            	<option>Meeting
+                </option>
+            	<option>Referral
+                </option>
+            	<option>Email
+                </option>
+            	<option>Letter
+                </option>
+            </select>
+        </div>
+        <div class="clearfix"></div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <a class="btn btn-primary" href="actiontype.html">Go</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

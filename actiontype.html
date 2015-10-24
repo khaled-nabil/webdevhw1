@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Login - STARS</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="js/moment.js"></script>
+<script>
+	$(document).ready(function(e) {
+		var data = $('#student').DataTable();
+		$('#student tbody').on( 'click', 'tr', function () {
+			$(this).toggleClass('selected');
+			if(data.rows('.selected').data().length > 0) {
+				$("#delete").removeClass("disabled");
+			}
+			else {
+				$("#delete").addClass("disabled");
+			}
+			if(data.rows('.selected').data().length == 1) {
+				$("#edit").removeClass("disabled");
+			}
+			else {
+				$("#edit").addClass("disabled");
+			}
+		});
+		$("#moreattach").on("click",function(){
+			$(".file").append('<input type="file" class="form-control" placeholder="Attach" />');
+			
+		});
+		$("#reset").on("click",function(){
+			$("#action").find("input[type=text], textarea, select").val("");
+			$(".file").empty();
+		});
+	});
+
+</script>
+<style>
+body {
+	font-family: 'Roboto', sans-serif;
+}
+.selected {
+	background-color: #F1C7C7 !important;
+}
+</style>
+</head>
+
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="#">STARS</a> </div>
+    <div class="collapse navbar-collapse" id="menu">
+      <p class="navbar-text">Welcome back, Samuel.</p>
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="records.html">Home</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#addaction">Add Action</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#changetype">Change Action Type</a></li>
+        <li  id="edit" class="disabled"><a href="#" data-toggle="modal" data-target="#editmodal">Edit</a></li>
+        <li id="delete"  class="disabled"><a href="#" data-toggle="modal" data-target="#delmodal" >Delete</a></li>
+      </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="login.html">Logout</a></li>
+    </ul>
+    </div>
+  </div>
+</nav>
+<section class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h3 class="text-info">Viewing action type "Meeting"</h3>
+      <p>To view more information, click on the first cell.</p>
+      <table id="student" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>Action ID</th>
+            <th>Student Name</th>
+            <th>Advisor</th>
+            <th>Date</th>
+            <th>Semester</th>
+            <th>CourseCRN</th>
+            <th>Status</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Attachments</th>
+          </tr>
+        </thead>
+        <tbody>
+        	<tr>
+            	<td>2</td>
+                <th>Ali Mohammed</th>
+                <th>Scarter John</th>
+            	<td>12/12/2015</td>
+            	<td>Fall 2015</td>
+            	<td>CHE</td>
+            	<td>Done</td>
+            	<td>Sed dui mauris</td>
+            	<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim diam non accumsan pharetra.</td>
+            	<td>
+                <a href="#" class="glyphicon glyphicon-file"></a>
+                <a href="#" class="glyphicon glyphicon-file"></a>
+                </td>
+            </tr>
+        	<tr>
+            	<td>5</td>
+                <th>Khaled Ali</th>
+                <th>Yousef Ahmed</th>
+            	<td>5/1/2014</td>
+            	<td>Summer 2014</td>
+            	<td>CS</td>
+            	<td>Pending</td>
+            	<td>Sed dui mauris</td>
+            	<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim diam non accumsan pharetra.</td>
+            	<td>
+                <a href="#" class="glyphicon glyphicon-file"></a>
+                </td>
+            </tr>
+        	<tr>
+            	<td>8</td>
+                <th>Mohammed Hassan</th>
+                <th>Scarter John</th>
+            	<td>6/3/2015</td>
+            	<td>Spring 2015</td>
+            	<td>ME</td>
+            	<td>Not Started Yet</td>
+            	<td>Sed dui mauris</td>
+            	<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim diam non accumsan pharetra.</td>
+            	<td>
+                <a href="#" class="glyphicon glyphicon-file"></a>
+                <a href="#" class="glyphicon glyphicon-file"></a>
+                <a href="#" class="glyphicon glyphicon-file"></a>
+                <a href="#" class="glyphicon glyphicon-file"></a>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="changetype" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Change Action type</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group col-md-12">
+            Select a student name to change to
+        </div>
+        <div class="form-group col-md-12">
+          <label for="actiontype">ActionType</label>
+			<select id="actiontype" class="form-control">
+            	<option>Meeting
+                </option>
+            	<option selected="selected">Referral
+                </option>
+            	<option>Email
+                </option>
+            	<option>Letter
+                </option>
+            </select>
+        </div>
+        <div class="clearfix"></div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reset">Change</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Student Action for "Ali Malek"</h4>
+      </div>
+      <div class="modal-body">
+      <form id="action">
+        <div class="form-group col-md-6">
+          <label for="date">Follow-up Date</label>
+          <input type="date" class="form-control" id="date" placeholder="Date" max="2016-12-31" value="2015-12-01" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="date">Action ID</label>
+          <input type="number" id="actionid" class="form-control" placeholder="Action ID" value="5" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="semester">Semester</label>
+			<select id="semester" class="form-control">
+            	<option selected="selected">Fall 2015
+                </option>
+            	<option>Spring 2015
+                </option>
+            	<option>Summer 2015
+                </option>
+            	<option>Fall 2016
+                </option>
+            	<option>Spring 2016
+                </option>
+            	<option>Summer 2016
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="actiontype">ActionType</label>
+			<select id="actiontype" class="form-control">
+            	<option>Meeting
+                </option>
+            	<option selected="selected">Referral
+                </option>
+            	<option>Email
+                </option>
+            	<option>Letter
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="title">Title</label>
+          <input type="text" id="title" class="form-control" placeholder="Title" value="Sed dui mauris" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="desc">Description</label>
+          <textarea id="desc" class="form-control" placeholder="Description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim diam non accumsan pharetra</textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="courseid">Course ID</label>
+			<select id="courseid" class="form-control">
+            	<option>Please choose</option>
+            	<option>AUP
+                </option>
+            	<option selected="selected">CHE
+                </option>
+            	<option>CVE
+                </option>
+            	<option>CS
+                </option>
+            	<option>CE
+                </option>
+            	<option>EE
+                </option>
+            	<option>ME
+                </option>
+            	<option>ISE
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="instructorid">Instructor ID</label>
+          <input type="text" value="41b02f22-ac19-47b3-94e0-7a0b70a59779" readonly="readonly" id="instructorid" class="form-control" placeholder="Title" />
+        </div>
+        <div class="form-group col-md-12">
+          <label>Change/Add Attachement</label>
+          <input type="file" class="form-control" placeholder="Attach" />
+          <div class="file">
+          <input type="file" class="form-control" placeholder="Attach" />
+          </div>
+        </div>
+        <button id="moreattach">Add More Attachments</button>
+        <div class="clearfix"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reset">Change</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="addaction" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Add Follow-up Action</h4>
+      </div>
+      <div class="modal-body">
+      <form id="action">
+        <div class="form-group col-md-6">
+          <label for="date">Follow-up Date</label>
+          <input type="date" class="form-control" id="date" placeholder="Date" max="2016-12-31" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="date">Action ID</label>
+          <input type="number" id="actionid" class="form-control" placeholder="Action ID" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="semester">Semester</label>
+			<select id="semester" class="form-control">
+            	<option>Fall 2015
+                </option>
+            	<option>Spring 2015
+                </option>
+            	<option>Summer 2015
+                </option>
+            	<option>Fall 2016
+                </option>
+            	<option>Spring 2016
+                </option>
+            	<option>Summer 2016
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="actiontype">ActionType</label>
+			<select id="actiontype" class="form-control">
+            	<option>Meeting
+                </option>
+            	<option>Referral
+                </option>
+            	<option>Email
+                </option>
+            	<option>Letter
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="title">Title</label>
+          <input type="text" id="title" class="form-control" placeholder="Title" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="desc">Description</label>
+          <textarea id="desc" class="form-control" placeholder="Description"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="courseid">Course ID</label>
+			<select id="courseid" class="form-control">
+            	<option>Please choose</option>
+            	<option>AUP
+                </option>
+            	<option>CHE
+                </option>
+            	<option>CVE
+                </option>
+            	<option>CS
+                </option>
+            	<option>CE
+                </option>
+            	<option>EE
+                </option>
+            	<option>ME
+                </option>
+            	<option>ISE
+                </option>
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="instructorid">Instructor ID</label>
+          <input type="text" value="41b02f22-ac19-47b3-94e0-7a0b70a59779" readonly="readonly" id="instructorid" class="form-control" placeholder="Title" />
+        </div>
+        <div class="form-group col-md-12">
+          <label>Attachement</label>
+          <input type="file" class="form-control" placeholder="Attach" />
+          <div class="file">
+          </div>
+        </div>
+        <button id="moreattach">Add More Attachments</button>
+        <div class="clearfix"></div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reset">Add</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="delmodal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Delete Action</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group col-md-12">
+            Are you sure you want to delete action "Sed dui mauris"?
+        </div>
+        <div class="clearfix"></div>
+        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="reset">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
